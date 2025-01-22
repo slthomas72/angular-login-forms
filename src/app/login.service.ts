@@ -1,18 +1,24 @@
-import { Injectable } from '@angular/core'; // Import Angular's Injectable decorator
-import { Observable, of } from 'rxjs'; // Import Observable to simulate asynchronous behavior
+import { Injectable } from '@angular/core';
+
+export interface ILoginResult {
+  loginSuccessful: boolean; // Indicates whether the login was successful
+}
 
 @Injectable({
   providedIn: 'root' // Makes this service available throughout the app
 })
 export class LoginService {
-  constructor() {} // Constructor doesn't need any dependencies for this example
+  constructor() {}
 
-  // Method to simulate login logic
-  login(username: string, password: string): Observable<boolean> {
-    // Mock logic: Returns true if both username and password are 'admin'
-    if (username === 'admin' && password === 'admin') {
-      return of(true); // Simulate a successful login
-    }
-    return of(false); // Simulate a failed login
+  // Method to validate login credentials and return a Promise
+  login(username: string, password: string): Promise<ILoginResult> {
+    return new Promise((resolve) => {
+      // Simulate login logic
+      if (username === 'admin' && password === 'admin') {
+        resolve({ loginSuccessful: true }); // Simulate successful login
+      } else {
+        resolve({ loginSuccessful: false }); // Simulate failed login
+      }
+    });
   }
 }

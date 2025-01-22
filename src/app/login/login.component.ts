@@ -1,7 +1,7 @@
-import { Component } from '@angular/core'; // Import Angular's Component decorator
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Import Reactive Forms tools
-import { Router } from '@angular/router'; // Import the Router to navigate between pages
-import { LoginService } from '../login.service'; // Import the LoginService to handle login logic
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { LoginService } from '../login.service'; // Import the LoginService
 
 @Component({
   selector: 'app-login', // Defines the tag name for this component
@@ -32,15 +32,13 @@ export class LoginComponent {
       // Extract the username and password from the form
       const { username, password } = this.loginForm.value;
 
-      // Call the login service to validate the credentials
-      this.loginService.login(username, password).subscribe((success) => {
-        if (success) {
-          // If login is successful, redirect to the dashboard
+      // Call the login method and handle the Promise
+      this.loginService.login(username, password).then((result) => {
+        if (result.loginSuccessful) {
           console.log('Login successful!'); // Log a success message
           this.loginFailed = false; // Reset the login failure flag
           this.router.navigate(['/dashboard']); // Redirect to the dashboard page
         } else {
-          // If login fails, show an error message
           console.error('Login failed.'); // Log a failure message
           this.loginFailed = true; // Set the login failure flag to true
         }
